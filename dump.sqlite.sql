@@ -15,7 +15,20 @@ CREATE TABLE Utilisateur
 SELECT titre
 FROM Calendrier
 INNER JOIN Utilisateur ON idCalendrier = idUtilisateur
- 
+
+CREATE TABLE populationtotale (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  gender TEXT NOT NULL
+);
+-- insert some values
+INSERT INTO populationtotale VALUES (1, "POPULATION EN ÂGE DE TRAVAILLER ", "POPULATION DE MOINS DE 15 ANS");
+INSERT INTO populationtotale VALUES (2, 'POPULATION ACTIVE               ', 'POPULATION INACTIVE');
+INSERT INTO populationtotale VALUES (3, 'POPULATION ACTIVE OCCUPEE       ', 'RETRAITES, ETUDIANTS');
+-- fetch some values
+SELECT * FROM populationtotale WHERE gender = "POPULATION DE MOINS DE 15 ANS";
+SELECT * FROM populationtotale WHERE gender = 'POPULATION INACTIVE';
+SELECT * FROM populationtotale WHERE gender = 'RETRAITES, ETUDIANTS';
 -- INDEX
  
 -- TRIGGER
