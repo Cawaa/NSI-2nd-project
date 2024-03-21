@@ -7,12 +7,12 @@ app = Flask(__name__)
 app.secret_key = "123"
 
 
-con = sqlite3.connect("user_data.db")
-con.execute("CREATE TABLE IF NOT EXISTS USERS(idUtilisateur integer primary key, name text, email text, password text);")
+con = sqlite3.connect("user.db")
+con.execute("CREATE TABLE IF NOT EXISTS USERS(idUtilisateur integer primary key AUTOINCREMENT, name text, email text, password text);")
 #con.execute("CREATE TABLE IF NOT EXISTS cameras_users ( pid INTEGER PRIMARY KEY AUTOINCREMENT, camera_ip TEXT NOT NULL ,camera_name TEXT , user_id INTEGER, FOREIGN KEY (user_id) REFERENCES USERS(pid));")
 #con.execute("CREATE TABLE IF NOT EXISTS cameras(camera_id INTEGER PRIMARY KEY AUTOINCREMENT, static_ip TEXT);")
 con.close()
-cameras=[]
+
 browser_opened = False
 
 @app.route('/')
@@ -23,18 +23,18 @@ def page_connexion():
         print(e.name)
         raise e
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/login',  methods=["POST"])
 def login():
     if request.method == 'POST':
         username = request.form['name']
         password = request.form['password']
       
-        con = sqlite3.connect("user_data.db")
+        con = sqlite3.connect("user.db")
         cur = con.cursor()
         rows = cur.execute("SELECT * FROM USERS WHERE name=? AND password=? ", (username, password))
         rows = rows.fetchone()
 
-        if rows is not None:  # Vérifier si des données ont été trouvées
+        if rows:  # Vérifier si des données ont été trouvées
             session['username'] = username  # Stocker le nom d'utilisateur dans la session
             flash('Connexion réussite')
             return redirect(url_for('customer'))
@@ -42,24 +42,19 @@ def login():
         else:
             flash("Les coordonées entrées sont incorrects veuillez ressayer")
             return redirect('/')
-
 @app.route('/customer', methods=["GET", "POST"])
-def customer():
-    # Récupérer les informations sur les caméras de l'utilisateur depuis la base de données
-    
-    
-
-    return render_template('to-do-list.html', cameras=cameras)
+def customer():           
+    return render_template('to-do-list.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['name']
+        username = request.form['username']
         password = request.form['password'] 
         email = request.form['email']
          #crypte le mot de passe
         # Vérifier si l'email ou le nom d'utilisateur existe déjà dans la base de données
-        con = sqlite3.connect("user_data.db")
+        con = sqlite3.connect("user.db")
         cur = con.cursor()
         cur.execute("SELECT * FROM USERS WHERE name=? OR email=?", (username, email))
         existing_user = cur.fetchone()
@@ -83,7 +78,7 @@ def testupdatemdp():
         username = request.form['name']
         email = request.form['email']
         
-        con = sqlite3.connect("user_data.db")
+        con = sqlite3.connect("user.db")
         cur = con.cursor()
         cur.execute("SELECT * FROM USERS WHERE name=? AND email=?", (username, email))
         existing_user = cur.fetchone()
@@ -109,41 +104,41 @@ def testupdatemdp():
 
 
         
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for("page-connexion"))
+# @app.route('/logout')
+# def logout():
+#     session.clear()
+#     return redirect(url_for("page-connexion"))
 
-@app.route('/delete_account')
-def delete_account():
-    # Afficher une page de confirmation pour la suppression du compte
-    return render_template('confirm_delete.html')
+# @app.route('/delete_account')
+# def delete_account():
+#     # Afficher une page de confirmation pour la suppression du compte
+#     return render_template('confirm_delete.html')
 
-@app.route('/confirm_delete', methods=["POST"])
-def confirm_delete():
-    if request.form.get("confirm") == "Oui":
-        # Supprimer le compte de l'utilisateur de la base de données
-        username = session['username']
-        con = sqlite3.connect("user_data.db")
-        cur = con.cursor()
+# @app.route('/confirm_delete', methods=["POST"])
+# def confirm_delete():
+#     if request.form.get("confirm") == "Oui":
+#         # Supprimer le compte de l'utilisateur de la base de données
+#         username = session['username']
+#         con = sqlite3.connect("user.db")
+#         cur = con.cursor()
         
-        # Supprimer les enregistrements de la table cameras_users associés à l'utilisateur
-        cur.execute('DELETE FROM cameras_users WHERE user_id IN (SELECT pid FROM USERS WHERE name=?)', (username,))
+#         # Supprimer les enregistrements de la table cameras_users associés à l'utilisateur
+#         cur.execute('DELETE FROM cameras_users WHERE user_id IN (SELECT pid FROM USERS WHERE name=?)', (username,))
         
-        # Supprimer l'utilisateur de la table USERS
-        cur.execute("DELETE FROM USERS WHERE name=?", (username,))
+#         # Supprimer l'utilisateur de la table USERS
+#         cur.execute("DELETE FROM USERS WHERE name=?", (username,))
         
-        con.commit()
-        con.close()
+#         con.commit()
+#         con.close()
 
-        # Supprimer toutes les données associées à l'utilisateur dans la session
-        session.clear()
+#         # Supprimer toutes les données associées à l'utilisateur dans la session
+#         session.clear()
 
-        # Rediriger vers la page d'accueil après la suppression du compte
-        return redirect(url_for("page-connexion"))
-    else:
-        # Si l'utilisateur choisit de ne pas supprimer le compte, rediriger vers une autre page ou faire une autre action
-        return redirect(url_for("customer"))
+#         # Rediriger vers la page d'accueil après la suppression du compte
+#         return redirect(url_for("page-connexion"))
+#     else:
+#         # Si l'utilisateur choisit de ne pas supprimer le compte, rediriger vers une autre page ou faire une autre action
+#         return redirect(url_for("customer"))
 
 if __name__ == '__main__':
     app.run(debug=True)
