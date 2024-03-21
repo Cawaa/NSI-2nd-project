@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App </title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class ="logo">To do List</a>
+        <div class="nav-links">
+            <ul>
+            <li class="active"><a href="#accueil">Accueil</a></li>
+            <li><a href="#apropos">À propos</a></li>
+            <li><a href="calendrier.html">Calendrier</a></li>
+            <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <img src="/images/menu-btn.png" alt="menu hamburger" class="menu-hamburger">
+      </nav>
+      
+
+    <div class="container">
+        <div class="todo-app">
+            <h2>To do list <img src="/images/icon.png"> </h2>
+            <div class="row">
+                <input type="text", id="input-box" placeholder="Créer votre nouvelle tâche">
+                <button onclick="addTask()">Ajouter</button>
+            </div>
+            <ul id="list-container">
+                
+            </ul>
+        </div>
+        
+
+    </div>
+<script src="/scripts/script.js"></script>
+<script>
+    const menuHamburger = document.querySelector(".menu-hamburger")
+    const navLinks = document.querySelector(".nav-links")
+
+    menuHamburger.addEventListener('click',()=>{
+    navLinks.classList.toggle('mobile-menu')
+    })
+</script>
+</body>
+</html>
