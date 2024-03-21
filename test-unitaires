@@ -1,0 +1,47 @@
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+// Initialisation du DOM
+const { document } = (new JSDOM('')).window;
+global.document = document;
+global.window = document.defaultView;
+
+// Importation des fonctions à tester
+const { addTask, saveData, showTask } = require("./yourFile.js");
+
+// Mock de localStorage
+global.localStorage = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    clear: jest.fn()
+};
+
+describe("Test des fonctions JavaScript", () => {
+    beforeEach(() => {
+        // Réinitialisation du DOM avant chaque test
+        document.body.innerHTML = '<input id="input-box" /><ul id="list-container"></ul>';
+    });
+
+    test("addTask ajoute une tâche à la liste", () => {
+        const inputBox = document.getElementById("input-box");
+        const listContainer = document.getElementById("list-container");
+        inputBox.value = "Test Task";
+        addTask();
+        expect(listContainer.children.length).toBe(1);
+        expect(listContainer.children[0].textContent).toBe("Test Task\u00d7");
+    });
+
+    test("saveData enregistre les données dans localStorage", () => {
+        const listContainer = document.getElementById("list-container");
+        listContainer.innerHTML = "<li>Test Task<span>\u00d7</span></li>";
+        saveData();
+        expect(localStorage.setItem).toHaveBeenCalledWith("data", listContainer.innerHTML);
+    });
+
+    test("showTask affiche les tâches à partir de localStorage", () => {
+        localStorage.getItem.mockReturnValue("<li>Test Task<span>\u00d7</span></li>");
+        showTask();
+        const listContainer = document.getElementById("list-container");
+        expect(listContainer.innerHTML).toBe("<li>Test Task<span>\u00d7</span></li>");
+    });
+});
