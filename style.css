@@ -3,6 +3,7 @@
     padding:0;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    
 }
 
 .container{
@@ -16,7 +17,7 @@
     width: 100%;
     max-width: 540px;
     background: #fff;
-    margin: 100px auto 20px;
+    margin: 180px auto 20px;
     padding: 40px 30px 70px;
     border-radius: 10px;
 
@@ -65,7 +66,7 @@ button{
     border-radius: 40px;
 }
 
-ul li{
+.container ul li{
     list-style: none;
     font-size: 17px;
     padding: 12px 8px 12px 50px;
@@ -74,7 +75,7 @@ ul li{
     position: relative;
 }
 
-ul li::before{
+.container ul li::before{
     content: '';
     position:absolute;
     height: 28px;
@@ -87,16 +88,16 @@ ul li::before{
     left: 8px;
 }
 
-ul li.checked{
+.container ul li.checked{
     color: #555;
     text-decoration: line-through;
 }
 
-ul li.checked::before{
+.container ul li.checked::before{
     background-image: url("../images/checked.png");
 }
 
-ul li span{
+.container ul li span{
     position: absolute;
     right: 0;
     top: 5px;
@@ -109,7 +110,109 @@ ul li span{
     border-radius: 50px
 }
 
-ul li span:hover{ /* Changer l'arrière plan quand on survole la croix*/
+.container ul li span:hover{ /* Changer l'arrière plan quand on survole la croix*/
     background: #edeef0;
 
+}
+
+#calendar {
+    width: 80%;
+    margin: auto;
+}
+
+.navbar{
+    position: absolute;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    
+}
+
+.navbar a {
+    color: rgba(14, 13, 13, 0.76);
+    text-decoration: none;
+}
+
+.navbar .logo {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+
+.navbar .nav-links ul {
+    display: flex;
+}
+
+.navbar .nav-links ul li {
+    margin: 0 25px;
+    list-style-type: none;
+}
+
+.navbar .nav-links ul li {
+    margin: 0 25px;
+    list-style-type: none;
+}
+
+.navbar .nav-links ul li.active a{
+    color: #DC143C;
+    font-weight: 600;
+    
+}
+
+.navbar .menu-hamburger {
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    width: 35px;
+}
+
+
+
+@media screen and (max-width: 750px){
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar .logo {
+        position: absolute;
+        top: 50px;
+        left:50px
+    }
+    
+    .navbar .menu-hamburger{
+        display: block;
+    }
+    .nav-links{
+        top : 0;
+        left: 0;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.226);
+        backdrop-filter: blur(7px);
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: -100%;
+        transition: all 0.5s ease;
+    }
+
+    .nav-links ul{ 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar .nav-links ul li {
+        margin: 25px 0;
+        font-size: 1.2em;
+    }
+
+    .mobile-menu{
+        margin-left: 0;
+    }
 }
