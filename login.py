@@ -12,7 +12,7 @@ con.execute("CREATE TABLE IF NOT EXISTS USERS(idUtilisateur integer primary key 
 #con.execute("CREATE TABLE IF NOT EXISTS cameras_users ( pid INTEGER PRIMARY KEY AUTOINCREMENT, camera_ip TEXT NOT NULL ,camera_name TEXT , user_id INTEGER, FOREIGN KEY (user_id) REFERENCES USERS(pid));")
 #con.execute("CREATE TABLE IF NOT EXISTS cameras(camera_id INTEGER PRIMARY KEY AUTOINCREMENT, static_ip TEXT);")
 
-con.execute("CREATE TABLE IF NOT EXISTS USERS(idUtilisateur integer primary key AUTOINCREMENT, name text, email text, password text);")
+con.execute("CREATE TABLE IF NOT EXISTS USERS(idUtilisateur integer primary key AUTOINCREMENT, population active ayant un emploi text, population active sans emploi text, population inactive text);")
 
 con.close()
 
