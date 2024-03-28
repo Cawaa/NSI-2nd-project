@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App </title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+        *{
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #153677, #4e085f);
+    padding: 10px;
+}
+
+.todo-app{
+    width: 100%;
+    max-width: 540px;
+    background: #fff;
+    margin: 180px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+
+}
+
+.todo-app h2 {
+    color: #002765;
+    display: flex; /* permet de mettre au même niveau le texte et l'image*/
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.todo-app h2 img{
+    width: 30px; /*Largeur**/
+    margin-left: 10px;
+
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #edeef0;
+    border-radius: 30px;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+input{
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    font-weight: 14px;
+}
+
+button{
+    border: none;
+    outline: none;
+    padding: 16px 50px;
+    background: #ff5945;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+.container ul li{
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 50px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.container ul li::before{
+    content: '';
+    position:absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url("https://imgs.search.brave.com/Q8IaVAMl6s91tEY_CZa9EEFjWKzCdfWoMD1LjIt-t_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pY29u/cy52ZXJ5aWNvbi5j/b20vcG5nL28vbWlz/Y2VsbGFuZW91cy9j/b21lLWFsb25nL3Vu/Y2hlY2tlZC0xOS5w/bmc");
+    background-size: cover;
+    background-position: center;
+    top:12px;
+    left: 8px;
+}
+
+.container ul li.checked{
+    color: #555;
+    text-decoration: line-through;
+}
+
+.container ul li.checked::before{
+    background-image: url("https://imgs.search.brave.com/o3agSM6YLqvk9Wp9awxw443XU05c_5_KRG6m1BijG04/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni8xOTAvMTkwNDEx/LnBuZw");
+}
+
+.container ul li span{
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color: #555;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50px
+}
+
+.container ul li span:hover{ /* Changer l'arrière plan quand on survole la croix*/
+    background: #edeef0;
+
+}
+
+#calendar {
+    width: 80%;
+    margin: auto;
+}
+
+.navbar{
+    position: absolute;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    
+}
+
+.navbar a {
+    color: rgba(14, 13, 13, 0.76);
+    text-decoration: none;
+}
+
+.navbar .logo {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+
+.navbar .nav-links ul {
+    display: flex;
+}
+
+.navbar .nav-links ul li {
+    margin: 0 25px;
+    list-style-type: none;
+}
+
+.navbar .nav-links ul li {
+    margin: 0 25px;
+    list-style-type: none;
+}
+
+.navbar .nav-links ul li.active a{
+    color: #DC143C;
+    font-weight: 600;
+    
+}
+
+.navbar .menu-hamburger {
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    width: 35px;
+}
+
+
+
+@media screen and (max-width: 750px){
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar .logo {
+        position: absolute;
+        top: 50px;
+        left:50px
+    }
+    
+    .navbar .menu-hamburger{
+        display: block;
+    }
+    .nav-links{
+        top : 0;
+        left: 0;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.226);
+        backdrop-filter: blur(7px);
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: -100%;
+        transition: all 0.5s ease;
+    }
+
+    .nav-links ul{ 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar .nav-links ul li {
+        margin: 25px 0;
+        font-size: 1.2em;
+    }
+
+    .mobile-menu{
+        margin-left: 0;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class ="logo">To do List</a>
+        <div class="nav-links">
+            <ul>
+            <li class="active"><a href="#accueil">Accueil</a></li>
+            <li><a href="{{url_for('a_propos')}}">À propos</a></li>
+            <li><a href="{{url_for('calendrier')}}">Calendrier</a></li>
+            <li><a href="{{url_for('utilisateurs')}}">Info</a></li> 
+            </ul>
+        </div>
+        <img src="https://imgs.search.brave.com/iwa_Fnb-z4rXbYuzEeiy4A0idyPazsw02hn8DyGE2Ns/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni8zOTE3LzM5MTc3/NjIucG5n" alt="menu hamburger" class="menu-hamburger">
+      </nav>
+      
+
+    <div class="container">
+        <div class="todo-app">
+            <h2>To do list <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRXkExxWNn9u8v5wTwkcVPTEx1v1Dv5qLqHOw3fdyAVEwsBrvlK"> </h2>
+            <div class="row">
+                <input type="text", id="input-box" placeholder="Créer votre nouvelle tâche">
+                <button onclick="addTask()">Ajouter</button>
+            </div>
+            <ul id="list-container">
+                
+            </ul>
+        </div>
+        
+
+    </div>
+<script src="/scripts/script.js"></script>
+<script>
+    const inputBox = document.getElementById("input-box");
+const listContainer = document.getElementById("list-container");
+
+function addTask(){
+    if(inputBox.value === ''){
+        alert("Vous devez écrire quelque chose !");
+    
+    }
+    else{
+        let li = document.createElement("li");
+        li.innerHTML = inputBox.value;
+        listContainer.appendChild(li);
+        let span =  document.createElement("span"); /* Changer l'image quand on décoche */
+        span.innerHTML = "\u00d7"; /* Ajoute une icône en croix */
+        li.appendChild(span);
+        }
+        
+
+    
+    inputBox.value = "";  /* Remettre le champ vide */
+    saveData();
+}
+
+listContainer.addEventListener("click", function(e){
+    if(e.target.tagName === "LI"){
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if(e.target.tagName === "SPAN"){
+        e.target.parentElement.remove();
+        saveData();
+    }
+}, false)
+
+function saveData(){
+    localStorage.setItem("data", listContainer.innerHTML);
+
+}
+function showTask(){
+    listContainer.innerHTML = localStorage.getItem("data");
+}
+showTask();
+
+
+    const menuHamburger = document.querySelector(".menu-hamburger")
+    const navLinks = document.querySelector(".nav-links")
+
+    menuHamburger.addEventListener('click',()=>{
+    navLinks.classList.toggle('mobile-menu')
+    })
+</script>
+</body>
+</html>

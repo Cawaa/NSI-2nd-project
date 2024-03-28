@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Register </title>
+        <link rel="stylesheet" href="../styles/login.css">     
+        <style>
+          @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("https://img.freepik.com/vecteurs-premium/fond-paysage-montagne-degrade_585365-3.jpg?w=740") no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+/* Ajoutez ce code à votre fichier login.css */
+
+.border {
+  width: 300px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 32px;
+  color: #333;
+}
+
+.word {
+  color: #333;
+}
+
+.msg {
+  margin-bottom: 10px;
+  color: #f00;
+}
+
+.textbox {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.bottom {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.bottom a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.bottom a:hover {
+  text-decoration: underline;
+}
+
+
+        </style>         
+    </head>
+    <body></br></br></br></br></br>
+      <div align="center">
+        <div align="center" class="border">
+           <div class="header">
+              <h1 class="word">Register</h1>
+           </div></br></br></br>
+          <h2 class="word">
+              <form action="{{ url_for('register') }}" method="post">
+                <div class="msg">{{ msg }}</div>
+                  <input id="username" name="name" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
+                  <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
+                  <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox"/></br></br>
+                  <input type="submit" class="btn" value="Sign Up"></br>
+              </form>
+          </h2>
+          <p class="bottom">Already have an account?  <a class="bottom" href="{{url_for('page_connexion')}}"> Sign In here</a></p>
+        </div>
+      </div>
+  </body>
+</html>
